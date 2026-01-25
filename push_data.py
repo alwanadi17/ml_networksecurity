@@ -75,8 +75,8 @@ class NetworkDataExtract():
 
 if __name__ == "__main__":
     try:
-        FILE_PATH = "notebooks/data/phisingData.csv"
-        DB = "alwanadiuntoro_db_user"
+        FILE_PATH = "data/raw/phisingData.csv"
+        DB = "ALWAN_NETSEC_AI"
         COLLECTION = "NetworkSecurityData"
         extractor = NetworkDataExtract()
         json_data = extractor.csv_to_json(file_path=FILE_PATH)

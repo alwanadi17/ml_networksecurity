@@ -6,5 +6,10 @@ certifi
 pymongo
 pymongo[srv]
 dnspython
+scikit-learn
+ipykernel
+seaborn
+matplotlib
+catboost
 
 -e .
