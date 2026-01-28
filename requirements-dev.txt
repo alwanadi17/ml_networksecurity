@@ -11,5 +11,7 @@ ipykernel
 seaborn
 matplotlib
 catboost
+pyaml
+dill
 
 -e .

@@ -1,4 +1,5 @@
 # common constants for training pipeline
+import os
 
 TARGET_COLUMN: str = "Result"
 TRAINING_PIPELINE_NAME: str = "net_sec_training_pipeline"
@@ -9,6 +10,11 @@ FILE_NAME: str = "phisingData.csv"
 RAW_FILE_NAME: str = "raw.csv"
 TRAIN_FILE_NAME: str = "train.csv"
 TEST_FILE_NAME: str = "test.csv"
+
+SCHEMA_DIR: str = "schema"
+SCHEMA_FILE_NAME: str = "schema.yaml"
+
+SCHEMA_FILE_PATH: str = os.path.join(SCHEMA_DIR, SCHEMA_FILE_NAME)
 
 # Data Ingestion Contants
 DATA_INGESTION_DATABASE_NAME: str = "ALWAN_NETSEC_AI"

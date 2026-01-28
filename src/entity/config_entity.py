@@ -19,6 +19,11 @@ class DataIngestionConfigEntity:
         self.ingested_dir = tp.DATA_INGESTION_INGESTED_DIR
         self.train_test_split_ratio = tp.DATA_INGESTION_TRAIN_TEST_SPLIT_RATIO
 
+        self.data_file_path = os.path.join(
+            tp.FILE_DIR,
+            tp.FILE_NAME
+        )
+
         self.data_ingestion_artifact_dir = os.path.join(
             tp_entity.artifact_dir,
             self.data_ingestion_dir
@@ -51,19 +56,23 @@ class DataIngestionConfigEntity:
 
 class DataValidationConfigEntity:
     def __init__(self, tp_entity: TrainingPipelineEntity):
+        self.data_validation_dir_name = tp.DATA_VALIDATION_DIR_NAME
+        self.data_validation_valid_dir_name = tp.DATA_VALIDATION_VALID_DIR
+        self.data_validation_invalid_dir_name = tp.DATA_VALIDATION_INVALID_DIR
+
         self.data_validation_artifact_dir = os.path.join(
             tp_entity.artifact_dir,
-            tp.DATA_VALIDATION_DIR_NAME
+            self.data_validation_dir_name
         )
 
         self.valid_dir = os.path.join(
             self.data_validation_artifact_dir,
-            tp.DATA_VALIDATION_VALID_DIR
+            self.data_validation_valid_dir_name
         )
 
         self.invalid_dir = os.path.join(
             self.data_validation_artifact_dir,
-            tp.DATA_VALIDATION_INVALID_DIR
+            self.data_validation_invalid_dir_name
         )
 
         self.valid_train_file_path = os.path.join(
@@ -86,8 +95,14 @@ class DataValidationConfigEntity:
             tp.TEST_FILE_NAME
         )
 
-        self.drift_report_file_path = os.path.join(
+        self.drift_report_dir = os.path.join(
             self.data_validation_artifact_dir,
-            tp.DATA_VALIDATION_DRIFT_REPORT_DIR,
+            tp.DATA_VALIDATION_DRIFT_REPORT_DIR
+        )
+
+        self.drift_report_file_path = os.path.join(
+            self.drift_report_dir,
             tp.DATA_VALIDATION_DRIFT_REPORT_FILE_NAME
         )
+
+

@@ -28,15 +28,17 @@ class DataIngestion:
         
     def export_collection_to_dataframe(self):
         try:
-            client = pymongo.MongoClient(MONGO_DB_URI, tlsCAFile=ca)
-            db = client[self.ingestion_config.database_name]
-            collection = db[self.ingestion_config.collection_name]
-            df = pd.DataFrame(list(collection.find()))
-            logging.info(f"df imported from collection: {self.ingestion_config.collection_name} in database: {self.ingestion_config.database_name}")
+            # client = pymongo.MongoClient(MONGO_DB_URI, tlsCAFile=ca)
+            # db = client[self.ingestion_config.database_name]
+            # collection = db[self.ingestion_config.collection_name]
+            # df = pd.DataFrame(list(collection.find()))
+            # logging.info(f"df imported from collection: {self.ingestion_config.collection_name} in database: {self.ingestion_config.database_name}")
 
-            id = '_id'
-            if id in df.columns:
-                df = df.drop(columns=[id], axis=1)
+            # id = '_id'
+            # if id in df.columns:
+            #     df = df.drop(columns=[id], axis=1)
+
+            df = pd.read_csv(self.ingestion_config.data_file_path)
 
             logging.info(f"Returning df... Dataframe shape: {df.shape}")
             return df
@@ -90,13 +92,13 @@ class DataIngestion:
         
     def initiate_data_ingestion(self):
         try:
-            raw_data_path = self.export_data_to_feature_store()
-            train_data_path, test_data_path = self.split_data_as_train_test()
+            raw_file_path = self.export_data_to_feature_store()
+            train_file_path, test_file_path = self.split_data_as_train_test()
 
             data_ingestion_artifact = DataIngestionArtifact(
-                raw_data_path=raw_data_path,
-                train_data_path=train_data_path,
-                test_data_path=test_data_path
+                raw_file_path=raw_file_path,
+                train_file_path=train_file_path,
+                test_file_path=test_file_path
             )
 
             logging.info(f"Data Ingestion artifact: {data_ingestion_artifact}")
