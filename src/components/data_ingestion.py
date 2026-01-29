@@ -74,7 +74,7 @@ class DataIngestion:
             logging.info(f"Data split completed. Train set shape: {train_set.shape}, Test set shape: {test_set.shape}")
 
             logging.info("Saving train and test sets to respective file paths...")
-            os.makedirs(self.ingestion_config.ingested_dir, exist_ok=True)
+            os.makedirs(os.path.dirname(self.ingestion_config.train_file_path), exist_ok=True)
 
             train_set.to_csv(self.ingestion_config.train_file_path, index=False, header=True)
             test_set.to_csv(self.ingestion_config.test_file_path, index=False, header=True)

@@ -21,11 +21,20 @@ class DataValidation:
             raise NetException(e, sys) from e
         
     @staticmethod
-    def read_data(file_path)->pd.DataFrame:
+    def read_data(file_path: str)->pd.DataFrame:
         try:
             return pd.read_csv(file_path)
         except Exception as e:
             logging.error(f"Error occurred in read_data staticmethod: {e}")
+            raise NetException(e, sys)
+    
+    @staticmethod
+    def write_csv(df: pd.DataFrame, file_path: str)->None:
+        try:
+            os.makedirs(os.path.dirname(file_path), exist_ok=True)
+            return df.to_csv(file_path, index=False, header=True)
+        except Exception as e:
+            logging.error(f"Error occurred in write_csv staticmethod: {e}")
             raise NetException(e, sys)
         
     def validate_len_columns(self, df:pd.DataFrame)->bool:
@@ -57,7 +66,7 @@ class DataValidation:
                     is_drift = True
                     status = False
 
-                report.update({col: {"p_value": pval, "drift_status": is_drift}})
+                report.update({col: {"p_value": float(pval), "drift_status": is_drift}})
 
             drift_report_file_path = self.validation_config.drift_report_file_path
 
@@ -109,18 +118,14 @@ class DataValidation:
             )
 
             if status:
-                os.makedirs(self.validation_config.valid_dir, exist_ok=True)
-                
-                df_train.to_csv(self.validation_config.valid_train_file_path, index=False, header=True)
-                df_test.to_csv(self.validation_config.valid_test_file_path, index=False, header=True)
+                self.write_csv(df_train, self.validation_config.valid_train_file_path)
+                self.write_csv(df_test, self.validation_config.valid_test_file_path)
 
                 data_validation_artifact.invalid_test_file_path = None
                 data_validation_artifact.invalid_train_file_path = None
             else:
-                os.makedirs(self.validation_config.invalid_dir, exist_ok=True)
-
-                df_train.to_csv(self.validation_config.invalid_train_file_path, index=False, header=True)
-                df_test.to_csv(self.validation_config.invalid_test_file_path, index=False, header=True)
+                self.write_csv(df_train, self.validation_config.invalid_train_file_path)
+                self.write_csv(df_test, self.validation_config.invalid_test_file_path)
 
                 data_validation_artifact.valid_test_file_path = None
                 data_validation_artifact.valid_train_file_path = None
