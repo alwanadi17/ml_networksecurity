@@ -37,14 +37,28 @@ class DataValidation:
             logging.error(f"Error occurred in write_csv staticmethod: {e}")
             raise NetException(e, sys)
         
-    def validate_len_columns(self, df:pd.DataFrame)->bool:
+    def validate_columns(self, df:pd.DataFrame)->bool:
         try:
-            schema_len_columns = len(self._schema_config)
+            schema_len_columns = len(self._schema_config['columns'])
             df_len_columns = len(df.columns)
             logging.info(f"Number of columns in schema file: {schema_len_columns}")
             logging.info(f"Number of columns in dataframe: {df_len_columns}")
 
-            return schema_len_columns == df_len_columns
+            len_cols = schema_len_columns == df_len_columns
+
+            logging.info(f"Columns validation status: {len_cols}")
+
+            ## Validate numerical columns
+            schema_cols = self._schema_config['numerical_columns']
+            df_cols = df.columns
+
+            schema_cols_set = set(schema_cols)
+            df_cols_set = set(df_cols)
+
+            cols_match = schema_cols_set == df_cols_set
+            logging.info(f"Columns match status: {cols_match}")
+
+            return len_cols and cols_match
         except Exception as e:
             logging.error(f"Error occurred in validate_columns_number method: {e}")
             raise NetException(e, sys)
@@ -87,11 +101,11 @@ class DataValidation:
 
             ## Schema Validation
             col_status = True
-            validate_train_columns = self.validate_len_columns(df_train)
+            validate_train_columns = self.validate_columns(df_train)
             if not validate_train_columns:
                 logging.info("Validation Error: df_train columns do not match")
             
-            validate_test_columns = self.validate_len_columns(df_test)
+            validate_test_columns = self.validate_columns(df_test)
             if not validate_test_columns:
                 logging.info("Validation Error: df_test columns do not match")
 
