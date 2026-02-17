@@ -14,7 +14,7 @@ from src.entity.config_entity import DataTransformationConfigEntity
 from src.entity.artifact_entity import DataValidationArtifact, DataTransformationArtifact
 from src.exception.exception import NetworkSecurityException as NetException
 from src.logging.logger import logging
-from src.utils.utils import save_object, read_csv_file, write_parquet_file
+from src.utils.utils import save_object, read_csv_file, write_parquet_file, write_yaml_file
 
 class DataTransformation:
     def __init__(self, data_transformation_config: DataTransformationConfigEntity,
@@ -54,6 +54,14 @@ class DataTransformation:
             transformed_x_train_df = pipeline.transform(x_train_df)
             transformed_x_test_df = pipeline.transform(x_test_df)            
 
+            logging.info("Saving data config...")
+            categorical_cols = pd.DataFrame(transformed_x_train_df).columns
+            data_config = {
+                'categorical_cols': list(categorical_cols)
+            }
+            data_config_file_path = self.data_transformation_config.data_config_file_path
+            write_yaml_file(data_config_file_path, data_config)
+
             logging.info("Saving transformed data...")
             train_concatenated_df = pd.concat([transformed_x_train_df, y_train_df], axis=1)
             test_concatenated_df = pd.concat([transformed_x_test_df, y_test_df], axis=1)
@@ -71,7 +79,8 @@ class DataTransformation:
             data_transformation_artifact = DataTransformationArtifact(
                 transformed_train_file_path=transformed_train_file_path,
                 transformed_test_file_path=transformed_test_file_path,
-                transformed_object_file_path=object_file_path
+                transformed_object_file_path=object_file_path,
+                data_config_file_path=data_config_file_path
             )
 
             return data_transformation_artifact

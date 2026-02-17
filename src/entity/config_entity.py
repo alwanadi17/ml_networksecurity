@@ -107,4 +107,10 @@ class DataTransformationConfigEntity:
             tp.DATA_TRANSFORMATION_OBJECT_DIR_NAME,
             tp.DATA_TRANSFORMATION_OBJECT_FILE_NAME
         )
+
+        self.data_config_file_path = os.path.join(
+            self.data_transformation_artifact_dir,
+            tp.DATA_TRANSFORMATION_DATA_CONFIG_DIR,
+            tp.DATA_TRANSFORMATION_DATA_CONFIG_FILE_NAME
+        )
         
