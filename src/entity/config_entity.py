@@ -89,4 +89,39 @@ class DataValidationConfigEntity:
             tp.DATA_VALIDATION_DRIFT_REPORT_FILE_NAME
         )
 
+class DataTransformationConfigEntity:
+    def __init__(self, tp_entity: TrainingPipelineEntity):
+        self.data_transformation_dir_name = tp.DATA_TRANSFORMATION_DIR_NAME
+        self.transformed_dir_name = tp.DATA_TRANSFORMATION_TRANSFORMED_DIR_NAME
+        self.object_dir_name = tp.DATA_TRANSFORMATION_OBJECT_DIR_NAME
 
+        self.data_transformation_artifact_dir = os.path.join(
+            tp_entity.artifact_dir,
+            self.data_transformation_dir_name
+        )
+
+        self.transformed_dir = os.path.join(
+            self.data_transformation_artifact_dir,
+            self.transformed_dir_name
+        )
+
+        self.object_dir = os.path.join(
+            self.data_transformation_artifact_dir,
+            self.object_dir_name
+        )
+
+        self.transformed_train_file_path = os.path.join(
+            self.transformed_dir,
+            tp.DATA_TRANSFORMATION_TRANSFORMED_TRAIN_FILE_NAME
+        )
+
+        self.transformed_test_file_path = os.path.join(
+            self.transformed_dir,
+            tp.DATA_TRANSFORMATION_TRANSFORMED_TEST_FILE_NAME
+        )
+
+        self.preprocessor_object_file_path = os.path.join(
+            self.object_dir,
+            tp.DATA_TRANSFORMATION_OBJECT_FILE_NAME
+        )
+        

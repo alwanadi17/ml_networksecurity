@@ -13,5 +13,7 @@ matplotlib
 catboost
 pyaml
 dill
+pyarrow
+fastparquet
 
 -e .

@@ -1,8 +1,14 @@
 from src.exception.exception import NetworkSecurityException as NetException
 from src.logging.logger import logging
 from src.components.data_ingestion import DataIngestion
-from src.entity.config_entity import TrainingPipelineEntity, DataIngestionConfigEntity, DataValidationConfigEntity
+from src.entity.config_entity import (
+    TrainingPipelineEntity, 
+    DataIngestionConfigEntity, 
+    DataValidationConfigEntity, 
+    DataTransformationConfigEntity
+)
 from src.components.data_validation import DataValidation
+from src.components.data_transformation import DataTransformation
 
 import sys
 
@@ -24,6 +30,13 @@ if __name__ == "__main__":
         logging.info(f"Data validation initiated: {data_validation}")
         data_validation_artifact = data_validation.initiate_data_validation()
         logging.info(f"Data validation artifact: {data_validation_artifact}")
+
+        transformation_config = DataTransformationConfigEntity(training_pipeline)
+        logging.info(f"Data transformation config initiated: {transformation_config}")
+        data_transformation = DataTransformation(transformation_config, data_validation_artifact)
+        logging.info(f"Data transformation initiated: {data_transformation}")
+        data_transformation_artifact = data_transformation.initiate_data_transformation()
+        logging.info(f"Data transformation artifact: {data_transformation_artifact}")
         
     except Exception as e:
         logging.error(f"Error occurred in main function: {e}")
