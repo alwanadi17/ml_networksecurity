@@ -41,10 +41,10 @@ class DataTransformation:
             train_df = read_csv_file(self.data_validation_artifact.valid_train_file_path)
             test_df = read_csv_file(self.data_validation_artifact.valid_test_file_path)
 
-            x_train_df = train_df.drop(columns=[TARGET_COLUMN], axis=1)
+            x_train_df = train_df.drop(columns=[TARGET_COLUMN])
             y_train_df = train_df[TARGET_COLUMN]
 
-            x_test_df = test_df.drop(columns=[TARGET_COLUMN], axis=1)
+            x_test_df = test_df.drop(columns=[TARGET_COLUMN])
             y_test_df = test_df[TARGET_COLUMN]
 
             pipeline = self.pipeline_init()
