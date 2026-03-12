@@ -17,7 +17,7 @@ from src.exception.exception import NetworkSecurityException as NetException
 from src.logging.logger import logging
 from src.utils.utils import save_object, read_csv_file, write_parquet_file, write_yaml_file
 
-class DataTypeTransformer(BaseEstimator, TransformerMixin):
+class ColumnDatatypeTransformer(BaseEstimator, TransformerMixin):
     def __init__(self):
         self.feature_names_in = []
 
@@ -53,7 +53,7 @@ class DataTransformation:
 
             pipeline = Pipeline(steps=[
                 ('imputer', imputer),
-                ('data_type_transformer', DataTypeTransformer())
+                ('column_datatype_transformer', ColumnDatatypeTransformer())
             ])
 
             return pipeline

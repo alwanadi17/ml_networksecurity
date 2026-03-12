@@ -21,3 +21,20 @@ class DataTransformationArtifact:
     transformed_test_file_path: str
     transformed_object_file_path: str
     data_config_file_path: str
+
+@dataclass
+class ClassificationReportArtifact:
+    report_file_path: str
+    accuracy: float
+    roc_auc: float
+    f1_score: float
+    precision: float
+    recall: float
+
+@dataclass
+class ModelTrainerArtifact:
+    model_file_path: str
+    model_config_file_path: str
+    classification_report_train_artifact: ClassificationReportArtifact
+    classification_report_test_artifact: ClassificationReportArtifact
+    

@@ -48,3 +48,13 @@ DATA_TRANSFORMATION_IMPUTER_PARAMS: dict = {
     "weights": "uniform",
     "missing_values": np.nan
 }
+
+# Model Trainer Constants
+MODEL_TRAINER_DIR_NAME: str = "model_trainer"
+MODEL_TRAINER_MODEL_TRAINED_DIR_NAME: str = "model"
+MODEL_TRAINER_MODEL_TRAINED_FILE_NAME: str = "model.pkl"
+MODEL_TRAINER_MODEL_CONFIG_DIR_NAME: str = "model_config"
+MODEL_TRAINER_MODEL_CONFIG_FILE_NAME: str = "model_config.yaml"
+MODEL_TRAINER_CLASSIFICATION_REPORT_DIR_NAME: str = "classification_report"
+MODEL_TRAINER_CLASSIFICATION_REPORT_TRAIN_FILE_NAME: str = "classification_report_train.yaml"
+MODEL_TRAINER_CLASSIFICATION_REPORT_TEST_FILE_NAME: str = "classification_report_test.yaml"

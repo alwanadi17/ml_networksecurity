@@ -5,10 +5,12 @@ from src.entity.config_entity import (
     TrainingPipelineEntity, 
     DataIngestionConfigEntity, 
     DataValidationConfigEntity, 
-    DataTransformationConfigEntity
+    DataTransformationConfigEntity,
+    ModelTrainerConfigEntity
 )
 from src.components.data_validation import DataValidation
 from src.components.data_transformation import DataTransformation
+from src.components.model_trainer import ModelTrainer
 
 import sys
 
@@ -37,6 +39,13 @@ if __name__ == "__main__":
         logging.info(f"Data transformation initiated: {data_transformation}")
         data_transformation_artifact = data_transformation.initiate_data_transformation()
         logging.info(f"Data transformation artifact: {data_transformation_artifact}")
+
+        model_trainer_config = ModelTrainerConfigEntity(training_pipeline)
+        logging.info(f"Model trainer config initiated: {model_trainer_config}")
+        model_trainer = ModelTrainer(model_trainer_config, data_transformation_artifact)
+        logging.info(f"Model trainer initiated: {model_trainer}")
+        model_trainer_artifact = model_trainer.initiate_model_trainer()
+        logging.info(f"Model trainer artifact: {model_trainer_artifact}")
         
     except Exception as e:
         logging.error(f"Error occurred in main function: {e}")
