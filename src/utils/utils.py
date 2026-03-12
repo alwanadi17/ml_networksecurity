@@ -70,7 +70,16 @@ def write_csv_file(file_path: str, df: pd.DataFrame) -> None:
         logging.error(f"Error occurred while writing DataFrame to CSV file: {e}")
         raise NetException(e, sys)
     
-def write_parquet_file(file_path: str, df: pd.DataFrame):
+def read_parquet_file(file_path: str) -> pd.DataFrame:
+    try:
+        df = pd.read_parquet(file_path)
+        logging.info(f"Parquet file read successfully from {file_path}")
+        return df
+    except Exception as e:
+        logging.error(f"Error occurred while reading Parquet file: {e}")
+        raise NetException(e, sys)
+    
+def write_parquet_file(file_path: str, df: pd.DataFrame) -> None:
     try:
         os.makedirs(os.path.dirname(file_path), exist_ok=True)
         df.to_parquet(file_path, index=False)
