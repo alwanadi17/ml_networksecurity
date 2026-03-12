@@ -46,7 +46,6 @@ class DataIngestionConfigEntity:
 
 class DataValidationConfigEntity:
     def __init__(self, tp_entity: TrainingPipelineEntity):
-
         self.data_validation_artifact_dir = os.path.join(
             tp_entity.artifact_dir,
             tp.DATA_VALIDATION_DIR_NAME

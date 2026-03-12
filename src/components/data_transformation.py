@@ -7,6 +7,7 @@ from sklearn.impute import KNNImputer
 
 from sklearn import set_config
 set_config(transform_output='pandas')
+from sklearn.base import BaseEstimator, TransformerMixin
 
 from src.constant.training_pipeline import TARGET_COLUMN, DATA_TRANSFORMATION_IMPUTER_PARAMS
 
@@ -16,6 +17,29 @@ from src.exception.exception import NetworkSecurityException as NetException
 from src.logging.logger import logging
 from src.utils.utils import save_object, read_csv_file, write_parquet_file, write_yaml_file
 
+class DataTypeTransformer(BaseEstimator, TransformerMixin):
+    def __init__(self):
+        self.feature_names_in = []
+
+    def fit(self, X: pd.DataFrame, y=None):
+        self.feature_names_in_ = X.columns
+        return self
+    
+    def transform(self, X: pd.DataFrame) -> pd.DataFrame:
+        try:
+            X_df = X.copy()
+            for col in X_df.columns:
+                X_df[col] = X_df[col].astype('str')
+            
+            return X_df
+        except Exception as e:
+            logging.error(f"Error occurred in DataTypeTransformer transform method: {e}")
+            raise NetException(e, sys) from e
+        
+    def get_feature_names_out(self, input_features=None):
+        feature_names = self.feature_names_in_.copy()
+        return feature_names
+        
 class DataTransformation:
     def __init__(self, data_transformation_config: DataTransformationConfigEntity,
                  data_validation_artifact: DataValidationArtifact):
@@ -28,7 +52,8 @@ class DataTransformation:
             imputer: KNNImputer = KNNImputer(**DATA_TRANSFORMATION_IMPUTER_PARAMS)
 
             pipeline = Pipeline(steps=[
-                ('imputer', imputer)
+                ('imputer', imputer),
+                ('data_type_transformer', DataTypeTransformer())
             ])
 
             return pipeline
@@ -51,8 +76,8 @@ class DataTransformation:
 
             logging.info("Fitting and transforming data...")
             preprocessor = pipeline.fit(x_train_df)
-            transformed_x_train_df = pipeline.transform(x_train_df)
-            transformed_x_test_df = pipeline.transform(x_test_df)            
+            transformed_x_train_df = preprocessor.transform(x_train_df)
+            transformed_x_test_df = preprocessor.transform(x_test_df)
 
             logging.info("Saving data config...")
             categorical_cols = pd.DataFrame(transformed_x_train_df).columns
