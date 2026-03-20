@@ -166,16 +166,15 @@ class ModelTrainerConfigEntity:
             tp.MODEL_TRAINER_DIR_NAME
         )
 
-        self.model_file_path = os.path.join(
+        self.model_dir = os.path.join(
             self.model_trainer_artifact_dir,
-            tp.MODEL_TRAINER_MODEL_TRAINED_DIR_NAME,
-            tp.MODEL_TRAINER_MODEL_TRAINED_FILE_NAME
+            tp.MODEL_TRAINER_MODEL_TRAINED_DIR_NAME
         )
 
-        self.model_config_file_path = os.path.join(
+        self.model_params_file_path = os.path.join(
             self.model_trainer_artifact_dir,
-            tp.MODEL_TRAINER_MODEL_CONFIG_DIR_NAME,
-            tp.MODEL_TRAINER_MODEL_CONFIG_FILE_NAME
+            tp.MODEL_TRAINER_MODEL_PARAMS_DIR_NAME,
+            tp.MODEL_TRAINER_MODEL_PARAMS_FILE_NAME
         )
         
         self.classification_report_train_file_path = os.path.join(
