@@ -161,31 +161,18 @@ class CatBoostDataTransformationConfigEntity(DataTransformationConfigEntity):
 
 class ModelTrainerConfigEntity:
     def __init__(self, tp_entity: TrainingPipelineEntity):
+        self.model_params_file_name = tp.MODEL_TRAINER_MODEL_PARAMS_FILE_NAME
+        self.classification_report_dir_name = tp.MODEL_TRAINER_CLASSIFICATION_REPORT_DIR_NAME
+        self.classification_report_train_file_name = tp.MODEL_TRAINER_CLASSIFICATION_REPORT_TRAIN_FILE_NAME
+        self.classification_report_test_file_name = tp.MODEL_TRAINER_CLASSIFICATION_REPORT_TEST_FILE_NAME
+
         self.model_trainer_artifact_dir = os.path.join(
             tp_entity.artifact_dir,
             tp.MODEL_TRAINER_DIR_NAME
         )
 
-        self.model_dir = os.path.join(
+        self.model_trained_dir = os.path.join(
             self.model_trainer_artifact_dir,
             tp.MODEL_TRAINER_MODEL_TRAINED_DIR_NAME
-        )
-
-        self.model_params_file_path = os.path.join(
-            self.model_trainer_artifact_dir,
-            tp.MODEL_TRAINER_MODEL_PARAMS_DIR_NAME,
-            tp.MODEL_TRAINER_MODEL_PARAMS_FILE_NAME
-        )
-        
-        self.classification_report_train_file_path = os.path.join(
-            self.model_trainer_artifact_dir,
-            tp.MODEL_TRAINER_CLASSIFICATION_REPORT_DIR_NAME,
-            tp.MODEL_TRAINER_CLASSIFICATION_REPORT_TRAIN_FILE_NAME
-        )
-        
-        self.classification_report_test_file_path = os.path.join(
-            self.model_trainer_artifact_dir,
-            tp.MODEL_TRAINER_CLASSIFICATION_REPORT_DIR_NAME,
-            tp.MODEL_TRAINER_CLASSIFICATION_REPORT_TEST_FILE_NAME
         )
         

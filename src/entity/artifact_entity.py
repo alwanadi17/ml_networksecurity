@@ -32,7 +32,6 @@ class CatBoostDataTransformationArtifact(DataTransformationArtifact):
 
 @dataclass
 class ClassificationReportArtifact:
-    report_file_path: str
     accuracy: float
     roc_auc: float
     f1_score: float
@@ -41,14 +40,15 @@ class ClassificationReportArtifact:
 
 @dataclass
 class ModelTrainerArtifact:
-    model = Optional[Any]
-    data_config: Optional[Dict[str, Any]] = None
+    model: Optional[Any]
     params: Optional[Dict[str, Any]] = None
     
     train_classification_report_artifact: Optional[ClassificationReportArtifact] = None
     test_classification_report_artifact: Optional[ClassificationReportArtifact] = None
 
     model_file_path: Optional[str] = None
-    model_config_file_path: Optional[str] = None
+    model_params_file_path: Optional[str] = None
+    train_report_file_path: Optional[str] = None
+    test_report_file_path: Optional[str] = None
 
     

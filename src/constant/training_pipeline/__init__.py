@@ -57,8 +57,7 @@ DATA_TRANSFORMATION_TRANSFORMED_CATBOOST_TEST_FILE_NAME: str = "test.parquet"
 
 # Model Trainer Constants
 MODEL_TRAINER_DIR_NAME: str = "model_trainer"
-MODEL_TRAINER_MODEL_TRAINED_DIR_NAME: str = "models"
-MODEL_TRAINER_MODEL_PARAMS_DIR_NAME: str = "model_params"
+MODEL_TRAINER_MODEL_TRAINED_DIR_NAME: str = "model_trained"
 MODEL_TRAINER_MODEL_PARAMS_FILE_NAME: str = "model_params.yaml"
 MODEL_TRAINER_CLASSIFICATION_REPORT_DIR_NAME: str = "classification_report"
 MODEL_TRAINER_CLASSIFICATION_REPORT_TRAIN_FILE_NAME: str = "classification_report_train.yaml"
