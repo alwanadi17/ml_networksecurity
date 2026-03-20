@@ -1,16 +1,18 @@
 from src.exception.exception import NetworkSecurityException as NetException
 from src.logging.logger import logging
-from src.components.data_ingestion import DataIngestion
+from src.components.ingestion.data_ingestion import DataIngestion
 from src.entity.config_entity import (
     TrainingPipelineEntity, 
     DataIngestionConfigEntity, 
     DataValidationConfigEntity, 
-    DataTransformationConfigEntity,
-    ModelTrainerConfigEntity
+    CatBoostDataTransformationConfigEntity,
+    GenericDataTransformationConfigEntity,
+    # ModelTrainerConfigEntity
 )
-from src.components.data_validation import DataValidation
-from src.components.data_transformation import DataTransformation
-from src.components.model_trainer import ModelTrainer
+from src.components.validation.data_validation import DataValidation
+from src.components.transformation.catboost_transformation import CatBoostDataTransformation
+from src.components.transformation.generic_transformation import GenericDataTransformation
+# from src.components.trainers.model_trainer import ModelTrainer
 
 import sys
 
@@ -33,19 +35,26 @@ if __name__ == "__main__":
         data_validation_artifact = data_validation.initiate_data_validation()
         logging.info(f"Data validation artifact: {data_validation_artifact}")
 
-        transformation_config = DataTransformationConfigEntity(training_pipeline)
-        logging.info(f"Data transformation config initiated: {transformation_config}")
-        data_transformation = DataTransformation(transformation_config, data_validation_artifact)
-        logging.info(f"Data transformation initiated: {data_transformation}")
-        data_transformation_artifact = data_transformation.initiate_data_transformation()
-        logging.info(f"Data transformation artifact: {data_transformation_artifact}")
+        catboost_transformation_config = CatBoostDataTransformationConfigEntity(training_pipeline)
+        logging.info(f"Data transformation config initiated: {catboost_transformation_config}")
+        catboost_data_transformation = CatBoostDataTransformation(catboost_transformation_config, data_validation_artifact)
+        logging.info(f"Data transformation initiated: {catboost_data_transformation}")
+        catboost_data_transformation_artifact = catboost_data_transformation.initiate_data_transformation()
+        logging.info(f"Data transformation artifact: {catboost_data_transformation_artifact}")
 
-        model_trainer_config = ModelTrainerConfigEntity(training_pipeline)
-        logging.info(f"Model trainer config initiated: {model_trainer_config}")
-        model_trainer = ModelTrainer(model_trainer_config, data_transformation_artifact)
-        logging.info(f"Model trainer initiated: {model_trainer}")
-        model_trainer_artifact = model_trainer.initiate_model_trainer()
-        logging.info(f"Model trainer artifact: {model_trainer_artifact}")
+        generic_transformation_config = GenericDataTransformationConfigEntity(training_pipeline)
+        logging.info(f"Data transformation config initiated: {generic_transformation_config}")
+        generic_data_transformation = GenericDataTransformation(generic_transformation_config, data_validation_artifact)
+        logging.info(f"Data transformation initiated: {generic_data_transformation}")
+        generic_data_transformation_artifact = generic_data_transformation.initiate_data_transformation()
+        logging.info(f"Data transformation artifact: {generic_data_transformation_artifact}")
+
+        # model_trainer_config = ModelTrainerConfigEntity(training_pipeline)
+        # logging.info(f"Model trainer config initiated: {model_trainer_config}")
+        # model_trainer = ModelTrainer(model_trainer_config, data_transformation_artifact)
+        # logging.info(f"Model trainer initiated: {model_trainer}")
+        # model_trainer_artifact = model_trainer.initiate_model_trainer()
+        # logging.info(f"Model trainer artifact: {model_trainer_artifact}")
         
     except Exception as e:
         logging.error(f"Error occurred in main function: {e}")
