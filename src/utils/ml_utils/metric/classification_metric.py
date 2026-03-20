@@ -7,8 +7,9 @@ from sklearn.metrics import accuracy_score, roc_auc_score, f1_score, precision_s
 import pandas as pd
 import os
 import sys
+from typing import Dict, Any
 
-def classification_result(self, y_true: pd.Series, y_pred: pd.Series, report_file_path:str) -> ClassificationReportArtifact:
+def classification_result(self, y_true: pd.Series, y_pred: pd.Series, model_file_path:str) -> ClassificationReportArtifact:
     try:
         accuracy = accuracy_score(y_true, y_pred)
         roc_auc = roc_auc_score(y_true, y_pred)
@@ -17,7 +18,7 @@ def classification_result(self, y_true: pd.Series, y_pred: pd.Series, report_fil
         recall = recall_score(y_true, y_pred)
         classification_report_dict = classification_report(y_true, y_pred, output_dict=True)
 
-        report_to_save = {
+        report_dict: Dict[str, Any] = {
             'overall_accuracy': accuracy,
             'overall_roc_auc': roc_auc,
             'overall_f1_score': f1,
@@ -31,11 +32,7 @@ def classification_result(self, y_true: pd.Series, y_pred: pd.Series, report_fil
             }
         }
 
-        logging.info(f"Saving classification report at {report_file_path}")
-        write_yaml_file(report_file_path, report_to_save)
-
         classification_report_artifact = ClassificationReportArtifact(
-            report_file_path=report_file_path,
             accuracy=accuracy,
             roc_auc=roc_auc,
             f1_score=f1,
@@ -43,7 +40,7 @@ def classification_result(self, y_true: pd.Series, y_pred: pd.Series, report_fil
             recall=recall
         )
 
-        return classification_report_artifact
+        return classification_report_artifact, report_dict
     except Exception as e:
         logging.error(f"Error occurred in classification_result: {e}")
         raise NetException(e, sys) from e
