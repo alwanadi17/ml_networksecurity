@@ -6,6 +6,7 @@ import dill
 import os
 import sys
 import pandas as pd
+import numpy as np
 
 def read_yaml_file(file_path: str)->dict:
     try:
@@ -86,4 +87,22 @@ def write_parquet_file(file_path: str, df: pd.DataFrame) -> None:
         logging.info(f"DataFrame written successfully to {file_path}")
     except Exception as e:
         logging.error(f"Error occurred while writing DataFrame to Parquet file: {e}")
+        raise NetException(e, sys)
+    
+def write_npy_file(file_path: str, arr: np.ndarray) -> None:
+    try:
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        np.save(file_path, arr)
+        logging.info(f"NumPy array written successfully to {file_path}")
+    except Exception as e:
+        logging.error(f"Error occurred while writing NumPy array to file: {e}")
+        raise NetException(e, sys)
+    
+def read_npy_file(file_path: str) -> np.ndarray:
+    try:
+        arr = np.load(file_path)
+        logging.info(f"NumPy array read successfully from {file_path}")
+        return arr
+    except Exception as e:
+        logging.error(f"Error occurred while reading NumPy array from file: {e}")
         raise NetException(e, sys)
