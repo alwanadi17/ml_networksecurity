@@ -83,34 +83,80 @@ class DataValidationConfigEntity:
 
 class DataTransformationConfigEntity:
     def __init__(self, tp_entity: TrainingPipelineEntity):
-
         self.data_transformation_artifact_dir = os.path.join(
             tp_entity.artifact_dir,
             tp.DATA_TRANSFORMATION_DIR_NAME
         )
-
-        self.transformed_train_file_path = os.path.join(
+        
+        self.object_dir = os.path.join(
             self.data_transformation_artifact_dir,
-            tp.DATA_TRANSFORMATION_TRANSFORMED_DIR_NAME,
-            tp.DATA_TRANSFORMATION_TRANSFORMED_TRAIN_FILE_NAME
+            tp.DATA_TRANSFORMATION_OBJECT_DIR_NAME
         )
 
-        self.transformed_test_file_path = os.path.join(
+        self.data_transformed_dir = os.path.join(
             self.data_transformation_artifact_dir,
-            tp.DATA_TRANSFORMATION_TRANSFORMED_DIR_NAME,
-            tp.DATA_TRANSFORMATION_TRANSFORMED_TEST_FILE_NAME
+            tp.DATA_TRANSFORMATION_TRANSFORMED_DIR_NAME
         )
 
-        self.preprocessor_object_file_path = os.path.join(
+class GenericDataTransformationConfigEntity(DataTransformationConfigEntity):
+    def __init__(self, tp_entity: TrainingPipelineEntity):
+        super().__init__(tp_entity)
+
+        self.generic_object_file_path = os.path.join(
+            self.object_dir,
+            tp.DATA_TRANSFORMATION_GENERIC_OBJECT_FILE_NAME
+        )
+
+        self.generic_transformed_train_file_path = os.path.join(
+            self.data_transformed_dir,
+            tp.DATA_TRANSFORMATION_TRANSFORMED_GENERIC_DIR_NAME,
+            tp.DATA_TRANSFORMATION_TRANSFORMED_GENERIC_TRAIN_FILE_NAME
+        )
+
+        self.generic_transformed_test_file_path = os.path.join(
+            self.data_transformed_dir,
+            tp.DATA_TRANSFORMATION_TRANSFORMED_GENERIC_DIR_NAME,
+            tp.DATA_TRANSFORMATION_TRANSFORMED_GENERIC_TEST_FILE_NAME
+        )
+
+        self.generic_preprocessor_object_file_path = os.path.join(
             self.data_transformation_artifact_dir,
             tp.DATA_TRANSFORMATION_OBJECT_DIR_NAME,
-            tp.DATA_TRANSFORMATION_OBJECT_FILE_NAME
+            tp.DATA_TRANSFORMATION_GENERIC_OBJECT_FILE_NAME
+        )
+
+
+class CatBoostDataTransformationConfigEntity(DataTransformationConfigEntity):
+    def __init__(self, tp_entity: TrainingPipelineEntity):
+        super().__init__(tp_entity)
+
+        self.catboost_object_file_path = os.path.join(
+            self.object_dir,
+            tp.DATA_TRANSFORMATION_CATBOOST_OBJECT_FILE_NAME
+        )
+
+        self.catboost_transformed_train_file_path = os.path.join(
+            self.data_transformed_dir,
+            tp.DATA_TRANSFORMATION_TRANSFORMED_CATBOOST_DIR_NAME,
+            tp.DATA_TRANSFORMATION_TRANSFORMED_CATBOOST_TRAIN_FILE_NAME
+        )
+
+        self.catboost_transformed_test_file_path = os.path.join(
+            self.data_transformed_dir,
+            tp.DATA_TRANSFORMATION_TRANSFORMED_CATBOOST_DIR_NAME,
+            tp.DATA_TRANSFORMATION_TRANSFORMED_CATBOOST_TEST_FILE_NAME
+        )
+
+        self.catboost_preprocessor_object_file_path = os.path.join(
+            self.data_transformation_artifact_dir,
+            tp.DATA_TRANSFORMATION_OBJECT_DIR_NAME,
+            tp.DATA_TRANSFORMATION_CATBOOST_OBJECT_FILE_NAME
         )
 
         self.data_config_file_path = os.path.join(
             self.data_transformation_artifact_dir,
-            tp.DATA_TRANSFORMATION_DATA_CONFIG_DIR,
-            tp.DATA_TRANSFORMATION_DATA_CONFIG_FILE_NAME
+            tp.DATA_TRANSFORMATION_CATBOOST_DATA_CONFIG_DIR,
+            tp.DATA_TRANSFORMATION_CATBOOST_DATA_CONFIG_FILE_NAME
         )
 
 class ModelTrainerConfigEntity:
