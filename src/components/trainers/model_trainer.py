@@ -1,6 +1,6 @@
 from src.logging.logger import logging
 from src.exception.exception import NetworkSecurityException as NetException
-from src.entity.artifact_entity import ModelTrainerArtifact, DataTransformationArtifact
+from src.entity.artifact_entity import ModelTrainerArtifact
 from src.entity.config_entity import ModelTrainerConfigEntity
 from src.utils.ml_utils.metric.classification_metric import classification_result
 from src.utils.utils import save_object, write_yaml_file
@@ -13,11 +13,9 @@ from typing import Dict, Any
 class ModelTrainer:
     def __init__(
             self,
-            model_trainer_config: ModelTrainerConfigEntity,
-            data_transformation_artifact: DataTransformationArtifact
-        ):
+            model_trainer_config: ModelTrainerConfigEntity
+    ):
         self.model_trainer_config = model_trainer_config
-        self.data_transformation_artifact = data_transformation_artifact
 
     def _generate_model_paths(self, model: Any) -> Dict[str, str]:
         try:
@@ -44,7 +42,7 @@ class ModelTrainer:
             x_train: pd.DataFrame,
             y_train: pd.Series,
             model_trainer_artifact: ModelTrainerArtifact
-        ) -> ModelTrainerArtifact:
+    ) -> ModelTrainerArtifact:
         try:
             model_trainer_artifact.model.set_params(**model_trainer_artifact.params)
             model_trainer_artifact.model.fit(x_train, y_train)
@@ -74,7 +72,7 @@ class ModelTrainer:
             x_test: pd.DataFrame,
             y_test: pd.Series,
             model_trainer_artifact: ModelTrainerArtifact
-        ) -> ModelTrainerArtifact:
+    ) -> ModelTrainerArtifact:
         try:
             logging.info("Testing model...")
             y_pred = model_trainer_artifact.model.predict(x_test)
@@ -104,7 +102,7 @@ class ModelTrainer:
             y_test: Any,
             model_obj: Any,
             params: Dict[str, Any]
-        ) -> ModelTrainerArtifact:
+    ) -> ModelTrainerArtifact:
         try:
             logging.info(f"--- Process started for model: {model_obj.__class__.__name__}")
 
