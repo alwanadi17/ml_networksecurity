@@ -19,14 +19,19 @@ load_dotenv(find_dotenv())
 MONGO_DB_URI = os.getenv("MONGO_DB_URI")
 
 class DataIngestion:
-    def __init__(self, ingestion_config:DataIngestionConfigEntity):
+    def __init__(
+            self,
+            ingestion_config: DataIngestionConfigEntity
+    ):
         try:
             self.ingestion_config = ingestion_config
         except Exception as e:
             logging.error(f"Error occurred in DataIngestion initialization: {e}")
             raise NetSecException(e, sys) from e
         
-    def export_collection_to_dataframe(self):
+    def export_collection_to_dataframe(
+            self
+    ) -> pd.DataFrame:
         try:
             # client = pymongo.MongoClient(MONGO_DB_URI, tlsCAFile=ca)
             # db = client[self.ingestion_config.database_name]
@@ -46,7 +51,9 @@ class DataIngestion:
             logging.error(f"Error occurred while exporting collection to dataframe: {e}")
             raise NetSecException(e, sys) from e
         
-    def export_data_to_feature_store(self):
+    def export_data_to_feature_store(
+            self
+    ) -> str:
         try:
             df = self.export_collection_to_dataframe()
 
@@ -61,7 +68,9 @@ class DataIngestion:
             logging.error(f"Error occurred while exporting data to feature store: {e}")
             raise NetSecException(e, sys) from e
         
-    def split_data_as_train_test(self):
+    def split_data_as_train_test(
+            self
+    ) -> tuple[str, str]:
         try:
             df = pd.read_csv(self.ingestion_config.feature_store_file_path)
 
@@ -90,7 +99,9 @@ class DataIngestion:
             logging.error(f"Error occurred while splitting data into train and test sets: {e}")
             raise NetSecException(e, sys) from e
         
-    def initiate_data_ingestion(self):
+    def initiate_data_ingestion(
+            self
+    ) -> DataIngestionArtifact:
         try:
             raw_file_path = self.export_data_to_feature_store()
             train_file_path, test_file_path = self.split_data_as_train_test()

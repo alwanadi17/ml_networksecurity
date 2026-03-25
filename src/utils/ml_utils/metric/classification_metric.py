@@ -9,7 +9,11 @@ import os
 import sys
 from typing import Dict, Any
 
-def classification_result(self, y_true: pd.Series, y_pred: pd.Series, model_file_path:str) -> ClassificationReportArtifact:
+def classification_result(
+        self,
+        y_true: pd.Series,
+        y_pred: pd.Series,
+) -> tuple[ClassificationReportArtifact, Dict[str, Any]]:
     try:
         accuracy = accuracy_score(y_true, y_pred)
         roc_auc = roc_auc_score(y_true, y_pred)

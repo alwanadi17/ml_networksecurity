@@ -3,7 +3,10 @@ import os
 import src.constant.training_pipeline as tp
 
 class TrainingPipelineEntity:
-    def __init__(self, timestamp=datetime.now()):
+    def __init__(
+            self,
+            timestamp=datetime.now()
+    ):
         self.timestamp = timestamp.strftime("%m_%d_%Y_%H_%M_%S")
         self.pipeline_name = tp.TRAINING_PIPELINE_NAME
         self.artifact_dir_name = tp.ARTIFACT_DIR_NAME
@@ -11,7 +14,10 @@ class TrainingPipelineEntity:
 
 
 class DataIngestionConfigEntity:
-    def __init__(self, tp_entity: TrainingPipelineEntity):
+    def __init__(
+            self,
+            tp_entity: TrainingPipelineEntity
+    ):
         self.database_name = tp.DATA_INGESTION_DATABASE_NAME
         self.collection_name = tp.DATA_INGESTION_COLLECTION_NAME
         self.train_test_split_ratio = tp.DATA_INGESTION_TRAIN_TEST_SPLIT_RATIO
@@ -45,7 +51,10 @@ class DataIngestionConfigEntity:
         )
 
 class DataValidationConfigEntity:
-    def __init__(self, tp_entity: TrainingPipelineEntity):
+    def __init__(
+            self,
+            tp_entity: TrainingPipelineEntity
+    ):
         self.data_validation_artifact_dir = os.path.join(
             tp_entity.artifact_dir,
             tp.DATA_VALIDATION_DIR_NAME
@@ -82,7 +91,10 @@ class DataValidationConfigEntity:
         )
 
 class DataTransformationConfigEntity:
-    def __init__(self, tp_entity: TrainingPipelineEntity):
+    def __init__(
+            self,
+            tp_entity: TrainingPipelineEntity
+    ):
         self.data_transformation_artifact_dir = os.path.join(
             tp_entity.artifact_dir,
             tp.DATA_TRANSFORMATION_DIR_NAME
@@ -99,7 +111,10 @@ class DataTransformationConfigEntity:
         )
 
 class GenericDataTransformationConfigEntity(DataTransformationConfigEntity):
-    def __init__(self, tp_entity: TrainingPipelineEntity):
+    def __init__(
+            self,
+            tp_entity: TrainingPipelineEntity
+    ):
         super().__init__(tp_entity)
 
         self.generic_object_file_path = os.path.join(
@@ -127,7 +142,10 @@ class GenericDataTransformationConfigEntity(DataTransformationConfigEntity):
 
 
 class CatBoostDataTransformationConfigEntity(DataTransformationConfigEntity):
-    def __init__(self, tp_entity: TrainingPipelineEntity):
+    def __init__(
+            self,
+            tp_entity: TrainingPipelineEntity
+    ):
         super().__init__(tp_entity)
 
         self.catboost_object_file_path = os.path.join(
@@ -160,7 +178,10 @@ class CatBoostDataTransformationConfigEntity(DataTransformationConfigEntity):
         )
 
 class ModelTrainerConfigEntity:
-    def __init__(self, tp_entity: TrainingPipelineEntity):
+    def __init__(
+            self,
+            tp_entity: TrainingPipelineEntity
+    ):
         self.model_params_file_name = tp.MODEL_TRAINER_MODEL_PARAMS_FILE_NAME
         self.classification_report_dir_name = tp.MODEL_TRAINER_CLASSIFICATION_REPORT_DIR_NAME
         self.classification_report_train_file_name = tp.MODEL_TRAINER_CLASSIFICATION_REPORT_TRAIN_FILE_NAME

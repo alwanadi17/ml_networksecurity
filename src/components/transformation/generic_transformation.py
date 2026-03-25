@@ -16,14 +16,17 @@ from src.utils.utils import save_object, read_csv_file, write_npy_file
 from src.components.processing.custom_transformer import ColumnDatatypeTransformer
         
 class GenericDataTransformation:
-    def __init__(self, 
-                 data_transformation_config: GenericDataTransformationConfigEntity,
-                 data_validation_artifact: DataValidationArtifact,
+    def __init__(
+            self, 
+            data_transformation_config: GenericDataTransformationConfigEntity,
+            data_validation_artifact: DataValidationArtifact,
     ):
             self.data_transformation_config = data_transformation_config
             self.data_validation_artifact = data_validation_artifact
 
-    def pipeline_init(self) -> Pipeline:
+    def pipeline_init(
+            self
+    ) -> Pipeline:
         try:
             logging.info("Preparing data transformation pipeline")
             imputer: KNNImputer = KNNImputer(**DATA_TRANSFORMATION_IMPUTER_PARAMS)
@@ -39,7 +42,9 @@ class GenericDataTransformation:
             logging.error(f"Error occurred in initiate_pipeline: {e}")
             raise NetException(e, sys) from e
 
-    def initiate_data_transformation(self) -> GenericDataTransformationArtifact:
+    def initiate_data_transformation(
+            self
+    ) -> GenericDataTransformationArtifact:
           try:
             train_df = read_csv_file(self.data_validation_artifact.valid_train_file_path)
             test_df = read_csv_file(self.data_validation_artifact.valid_test_file_path)

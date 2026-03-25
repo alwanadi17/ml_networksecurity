@@ -11,7 +11,11 @@ import pandas as pd
 from scipy.stats import ks_2samp
 
 class DataValidation:
-    def __init__(self, validation_config:DataValidationConfigEntity, ingestion_artifact:DataIngestionArtifact):
+    def __init__(
+            self,
+            validation_config: DataValidationConfigEntity,
+            ingestion_artifact: DataIngestionArtifact
+    ):
         try:
             self.validation_config = validation_config
             self.ingestion_artifact = ingestion_artifact
@@ -21,7 +25,9 @@ class DataValidation:
             raise NetException(e, sys) from e
         
     @staticmethod
-    def read_data(file_path: str)->pd.DataFrame:
+    def read_data(
+        file_path: str
+    ) -> pd.DataFrame:
         try:
             return pd.read_csv(file_path)
         except Exception as e:
@@ -29,7 +35,10 @@ class DataValidation:
             raise NetException(e, sys)
     
     @staticmethod
-    def write_csv(df: pd.DataFrame, file_path: str)->None:
+    def write_csv(
+        df: pd.DataFrame,
+        file_path: str
+    ) -> None:
         try:
             os.makedirs(os.path.dirname(file_path), exist_ok=True)
             return df.to_csv(file_path, index=False, header=True)
@@ -37,7 +46,10 @@ class DataValidation:
             logging.error(f"Error occurred in write_csv staticmethod: {e}")
             raise NetException(e, sys)
         
-    def validate_columns(self, df:pd.DataFrame)->bool:
+    def validate_columns(
+            self,
+            df: pd.DataFrame
+    ) -> bool:
         try:
             schema_len_columns = len(self._schema_config['columns'])
             df_len_columns = len(df.columns)
@@ -63,7 +75,12 @@ class DataValidation:
             logging.error(f"Error occurred in validate_columns_number method: {e}")
             raise NetException(e, sys)
         
-    def detect_dataset_drift(self, base_df, current_df, threshold=0.05)->bool:
+    def detect_dataset_drift(
+            self,
+            base_df: pd.DataFrame,
+            current_df: pd.DataFrame,
+            threshold: float = 0.05
+    ) -> bool:
         try:
             status = True
             report = {}
