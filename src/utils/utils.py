@@ -48,7 +48,6 @@ def save_object(
     except Exception as e:
         logging.error(f"Error occured at save_object stage: {e}")
         raise NetException(e, sys)
-    
 
 def load_object(
         file_path: str

@@ -2,7 +2,7 @@ from src.logging.logger import logging
 from src.exception.exception import NetworkSecurityException as NetException
 from src.entity.artifact_entity import ModelTrainerArtifact
 from src.entity.config_entity import ModelTrainerConfigEntity
-from src.utils.ml_utils.metric.classification_metric import classification_result
+from src.utils.ml_utils.metrics.classification_metric import classification_result
 from src.utils.utils import save_object, write_yaml_file
 
 import os
