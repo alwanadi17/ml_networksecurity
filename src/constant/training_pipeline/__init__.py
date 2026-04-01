@@ -12,10 +12,12 @@ RAW_FILE_NAME: str = "raw.csv"
 TRAIN_FILE_NAME: str = "train.csv"
 TEST_FILE_NAME: str = "test.csv"
 
-SCHEMA_DIR_NAME: str = "schema"
+CONFIG_DIR_NAME: str = "config"
 SCHEMA_FILE_NAME: str = "schema.yaml"
+MODELS_CONFIG_FILE_NAME: str = "models.yaml"
 
-SCHEMA_FILE_PATH: str = os.path.join(SCHEMA_DIR_NAME, SCHEMA_FILE_NAME)
+SCHEMA_FILE_PATH: str = os.path.join(CONFIG_DIR_NAME, SCHEMA_FILE_NAME)
+MODELS_CONFIG_FILE_PATH: str = os.path.join(CONFIG_DIR_NAME, MODELS_CONFIG_FILE_NAME)
 
 # Data Ingestion Contants
 DATA_INGESTION_DATABASE_NAME: str = "ALWAN_NETSEC_AI"

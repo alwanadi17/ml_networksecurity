@@ -15,5 +15,7 @@ pyaml
 dill
 pyarrow
 fastparquet
+lightgbm
+xgboost
 
 -e .

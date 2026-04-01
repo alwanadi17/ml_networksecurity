@@ -1,0 +1,16 @@
+models:
+  CatBoost:
+    class: catboost.CatBoostClassifier
+    params: {}
+  XGBoost:
+    class: xgboost.XGBClassifier
+    params: {}
+  LightGBM:
+    class: lightgbm.LGBMClassifier
+    params: {}
+  RandomForest:
+    class: sklearn.ensemble.RandomForestClassifier
+    params: {}
+  GradientBoosting:
+    class: sklearn.ensemble.GradientBoostingClassifier
+    params: {}
