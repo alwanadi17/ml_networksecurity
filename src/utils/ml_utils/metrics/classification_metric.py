@@ -23,11 +23,11 @@ def classification_result(
         classification_report_dict = classification_report(y_true, y_pred, output_dict=True)
 
         report_dict: Dict[str, Any] = {
-            'overall_accuracy': accuracy,
-            'overall_roc_auc': roc_auc,
-            'overall_f1_score': f1,
-            'overall_precision': precision,
-            'overall_recall': recall,
+            'accuracy': accuracy,
+            'roc_auc': roc_auc,
+            'f1_score': f1,
+            'precision': precision,
+            'recall': recall,
             'macro_avg': classification_report_dict['macro avg'],
             'weighted_avg': classification_report_dict['weighted avg'],
             'class_specific': {
