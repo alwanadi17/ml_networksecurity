@@ -7,6 +7,8 @@ import os
 import sys
 import pandas as pd
 import numpy as np
+from typing import Any
+import importlib
 
 def read_yaml_file(
         file_path: str
@@ -122,12 +124,25 @@ def write_npy_file(
         raise NetException(e, sys)
     
 def read_npy_file(
-        file_path: str
+        file_path: str,
+        allow_pickle: bool = True
 ) -> np.ndarray:
     try:
-        arr = np.load(file_path)
+        arr = np.load(file_path, allow_pickle=allow_pickle)
         logging.info(f"NumPy array read successfully from {file_path}")
         return arr
     except Exception as e:
         logging.error(f"Error occurred while reading NumPy array from file: {e}")
         raise NetException(e, sys)
+    
+def import_class(
+        class_path: str
+) -> Any:
+    try:
+        module_path, class_name = class_path.rsplit('.', 1)
+        module = importlib.import_module(module_path)
+        return getattr(module, class_name)
+    except Exception as e:
+        logging.error(f"Error occurred while importing class {class_path}: {e}")
+        raise NetException(e, sys)
+    

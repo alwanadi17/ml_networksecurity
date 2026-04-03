@@ -17,18 +17,25 @@ class DataValidationArtifact:
     drift_report_file_path: str
 
 @dataclass
-class DataTransformationArtifact:
+class BaseDataTransformationArtifact:
     transformed_train_file_path: str
     transformed_test_file_path: str
     transformed_object_file_path: str
     
 @dataclass
-class GenericDataTransformationArtifact(DataTransformationArtifact):
+class GenericDataTransformationArtifact(BaseDataTransformationArtifact):
     pass
 
 @dataclass
-class CatBoostDataTransformationArtifact(DataTransformationArtifact):
+class CatBoostDataTransformationArtifact(BaseDataTransformationArtifact):
     data_config_file_path: str
+
+# Main transformation artifact 
+# that freely holds either generic or catboost transformation artifacts, depending on the use case
+@dataclass
+class DataTransformationArtifact:
+    generic_data_transformation_artifact: Optional[GenericDataTransformationArtifact] = None
+    catboost_data_transformation_artifact: Optional[CatBoostDataTransformationArtifact] = None
 
 @dataclass
 class ClassificationReportArtifact:
