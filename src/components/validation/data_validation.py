@@ -2,7 +2,6 @@ from src.exception.exception import NetworkSecurityException as NetException
 from src.logging.logger import logging
 from src.entity.artifact_entity import DataIngestionArtifact, DataValidationArtifact
 from src.entity.config_entity import DataValidationConfigEntity
-from src.constant.training_pipeline import SCHEMA_FILE_PATH
 from src.utils.utils import read_yaml_file, write_yaml_file
 
 import os
@@ -19,7 +18,7 @@ class DataValidation:
         try:
             self.validation_config = validation_config
             self.ingestion_artifact = ingestion_artifact
-            self._schema_config = read_yaml_file(SCHEMA_FILE_PATH)
+            self._schema_config = read_yaml_file(self.validation_config.schema_file_path)
         except Exception as e:
             logging.error(f"Error occurred in DataValidation initialization: {e}")
             raise NetException(e, sys) from e

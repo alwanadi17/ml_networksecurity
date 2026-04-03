@@ -55,6 +55,8 @@ class DataValidationConfigEntity:
             self,
             tp_entity: TrainingPipelineEntity
     ):
+        self.schema_file_path = tp.SCHEMA_FILE_PATH
+
         self.data_validation_artifact_dir = os.path.join(
             tp_entity.artifact_dir,
             tp.DATA_VALIDATION_DIR_NAME
@@ -95,6 +97,10 @@ class DataTransformationConfigEntity:
             self,
             tp_entity: TrainingPipelineEntity
     ):
+        self.models_config_file_path = tp.MODELS_CONFIG_FILE_PATH
+        # Keep the reference for childs
+        self.tp_entity = tp_entity
+
         self.data_transformation_artifact_dir = os.path.join(
             tp_entity.artifact_dir,
             tp.DATA_TRANSFORMATION_DIR_NAME
@@ -134,7 +140,7 @@ class GenericDataTransformationConfigEntity(DataTransformationConfigEntity):
             tp.DATA_TRANSFORMATION_TRANSFORMED_GENERIC_TEST_FILE_NAME
         )
 
-        self.generic_preprocessor_object_file_path = os.path.join(
+        self.preprocessor_object_file_path = os.path.join(
             self.data_transformation_artifact_dir,
             tp.DATA_TRANSFORMATION_OBJECT_DIR_NAME,
             tp.DATA_TRANSFORMATION_GENERIC_OBJECT_FILE_NAME
@@ -165,7 +171,7 @@ class CatBoostDataTransformationConfigEntity(DataTransformationConfigEntity):
             tp.DATA_TRANSFORMATION_TRANSFORMED_CATBOOST_TEST_FILE_NAME
         )
 
-        self.catboost_preprocessor_object_file_path = os.path.join(
+        self.preprocessor_object_file_path = os.path.join(
             self.data_transformation_artifact_dir,
             tp.DATA_TRANSFORMATION_OBJECT_DIR_NAME,
             tp.DATA_TRANSFORMATION_CATBOOST_OBJECT_FILE_NAME
@@ -195,5 +201,8 @@ class ModelTrainerConfigEntity:
         self.model_trained_dir = os.path.join(
             self.model_trainer_artifact_dir,
             tp.MODEL_TRAINER_MODEL_TRAINED_DIR_NAME
+        )
+
+        self.model_config_file_path = os.path.join(
         )
         
