@@ -32,17 +32,19 @@ class DataTransformation:
             tp_entity = self.data_transformation_config.tp_entity
             generic_data_transformation_artifact = None
             catboost_data_transformation_artifact = None
+            is_generated_generic = False
 
             # Only run transformations for the models specified in the config file
-            for model_type in models_config['models']:
-                if model_type == 'Generic':
-                    generic_transformation_config = GenericDataTransformationConfigEntity(tp_entity)
-                    generic_transformation = GenericDataTransformation(generic_transformation_config, self.data_validation_artifact)
-                    generic_data_transformation_artifact = generic_transformation.initiate_data_transformation()
+            for model_type in models_config:
                 if model_type == 'CatBoost':
                     catboost_transformation_config = CatBoostDataTransformationConfigEntity(tp_entity)
                     catboost_transformation = CatBoostDataTransformation(catboost_transformation_config, self.data_validation_artifact)
                     catboost_data_transformation_artifact = catboost_transformation.initiate_data_transformation()
+                elif is_generated_generic == False and model_type != 'CatBoost':
+                    generic_transformation_config = GenericDataTransformationConfigEntity(tp_entity)
+                    generic_transformation = GenericDataTransformation(generic_transformation_config, self.data_validation_artifact)
+                    generic_data_transformation_artifact = generic_transformation.initiate_data_transformation()
+                    is_generated_generic = True
 
             data_transformation_artifact = DataTransformationArtifact(
                 generic_data_transformation_artifact=generic_data_transformation_artifact,
