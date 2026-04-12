@@ -47,15 +47,13 @@ class ClassificationReportArtifact:
 
 @dataclass
 class ModelTrainerArtifact:
-    model: Optional[Any]
-    params: Optional[Dict[str, Any]] = None
-    
-    train_classification_report_artifact: Optional[ClassificationReportArtifact] = None
-    test_classification_report_artifact: Optional[ClassificationReportArtifact] = None
+    model_name: str
+    params: Dict[str, Any]
 
-    model_file_path: Optional[str] = None
-    model_params_file_path: Optional[str] = None
-    train_report_file_path: Optional[str] = None
-    test_report_file_path: Optional[str] = None
-
+    model_file_path: str
+    model_params_file_path: str
+    train_report_file_path: str
+    test_report_file_path: str
     
+    train_classification_report_artifact: ClassificationReportArtifact
+    test_classification_report_artifact: ClassificationReportArtifact

@@ -1,16 +1,21 @@
 from src.logging.logger import logging
 from src.exception.exception import NetworkSecurityException as NetException
 from src.entity.artifact_entity import ClassificationReportArtifact
-from src.utils.utils import write_yaml_file
 
-from sklearn.metrics import accuracy_score, roc_auc_score, f1_score, precision_score, recall_score, classification_report
+from sklearn.metrics import (
+    accuracy_score,
+    roc_auc_score,
+    f1_score,
+    precision_score,
+    recall_score,
+    classification_report
+)
 import pandas as pd
 import os
 import sys
 from typing import Dict, Any
 
 def classification_result(
-        self,
         y_true: pd.Series,
         y_pred: pd.Series,
 ) -> tuple[ClassificationReportArtifact, Dict[str, Any]]:
@@ -22,6 +27,8 @@ def classification_result(
         recall = recall_score(y_true, y_pred)
         classification_report_dict = classification_report(y_true, y_pred, output_dict=True)
 
+        logging.info(f'classification_report_dict: {classification_report_dict}')
+
         report_dict: Dict[str, Any] = {
             'accuracy': accuracy,
             'roc_auc': roc_auc,
@@ -31,8 +38,8 @@ def classification_result(
             'macro_avg': classification_report_dict['macro avg'],
             'weighted_avg': classification_report_dict['weighted avg'],
             'class_specific': {
-                'attack': classification_report_dict['-1'],
-                'normal': classification_report_dict['1']
+                'attack': classification_report_dict['0.0'],
+                'normal': classification_report_dict['1.0']
             }
         }
 

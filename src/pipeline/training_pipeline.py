@@ -16,7 +16,9 @@ from src.entity.artifact_entity import (
 from src.components.ingestion.data_ingestion import DataIngestion
 from src.components.validation.data_validation import DataValidation
 from src.components.transformation.data_transformation import DataTransformation
-# from src.components.trainers.base_model_trainer import ModelTrainer
+from src.components.trainers.model_trainer import ModelTrainer
+
+from typing import Dict
 
 class TrainingPipeline:
     def __init__(
@@ -34,7 +36,7 @@ class TrainingPipeline:
             self.data_ingestion_config = DataIngestionConfigEntity(training_pipeline)
             self.data_validation_config = DataValidationConfigEntity(training_pipeline)
             self.data_transformation_config = DataTransformationConfigEntity(training_pipeline)
-            # self.model_trainer_config = ModelTrainerConfigEntity(training_pipeline)
+            self.model_trainer_config = ModelTrainerConfigEntity(training_pipeline)
         except Exception as e:
             logging.error(f"Error in _generate_config_entity: {e}")
             raise NetException(e)
@@ -62,4 +64,24 @@ class TrainingPipeline:
             return data_transformation_artifact
         except Exception as e:
             logging.error(f"Error in data_processing_pipeline: {e}")
+            raise NetException(e)
+        
+    def model_training_pipeline(
+            self,
+            data_transformation_artifact: DataTransformationArtifact
+    ) -> Dict[str, ModelTrainerArtifact]:
+        try:
+            logging.info("Starting model training pipeline.")
+
+            model_trainer = ModelTrainer(
+                data_transformation_artifact,
+                model_trainer_config=self.model_trainer_config
+            )
+
+            model_trainer_artifacts = model_trainer.initiate_model_trainer()
+            logging.info(f"Training for model: {model_trainer_artifacts.keys()} completed")
+
+            return model_trainer_artifacts
+        except Exception as e:
+            logging.error(f"Error in model_training_pipeline: {e}")
             raise NetException(e)

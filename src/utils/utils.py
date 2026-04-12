@@ -8,7 +8,6 @@ import sys
 import pandas as pd
 import numpy as np
 from typing import Any
-import importlib
 
 def read_yaml_file(
         file_path: str
@@ -134,15 +133,4 @@ def read_npy_file(
     except Exception as e:
         logging.error(f"Error occurred while reading NumPy array from file: {e}")
         raise NetException(e, sys)
-    
-def import_class(
-        class_path: str
-) -> Any:
-    try:
-        module_path, class_name = class_path.rsplit('.', 1)
-        module = importlib.import_module(module_path)
-        return getattr(module, class_name)
-    except Exception as e:
-        logging.error(f"Error occurred while importing class {class_path}: {e}")
-        raise NetException(e, sys)
-    
+

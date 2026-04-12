@@ -188,6 +188,8 @@ class ModelTrainerConfigEntity:
             self,
             tp_entity: TrainingPipelineEntity
     ):
+        self.models_config_file_path = tp.MODELS_CONFIG_FILE_PATH
+        
         self.model_params_file_name = tp.MODEL_TRAINER_MODEL_PARAMS_FILE_NAME
         self.classification_report_dir_name = tp.MODEL_TRAINER_CLASSIFICATION_REPORT_DIR_NAME
         self.classification_report_train_file_name = tp.MODEL_TRAINER_CLASSIFICATION_REPORT_TRAIN_FILE_NAME
@@ -203,6 +205,8 @@ class ModelTrainerConfigEntity:
             tp.MODEL_TRAINER_MODEL_TRAINED_DIR_NAME
         )
 
-        self.model_config_file_path = os.path.join(
+        self.model_hyperparams_dir = os.path.join(
+            self.model_trainer_artifact_dir,
+            tp.MODEL_TRAINER_MODEL_HYPERPARAMS_DIR_NAME,
         )
         
