@@ -44,10 +44,10 @@ class BaseDataTransformation:
             test_df = read_csv_file(self.data_validation_artifact.valid_test_file_path)
 
             x_train_df = train_df.drop(columns=[TARGET_COLUMN])
-            y_train_series = train_df[TARGET_COLUMN].astype(str)
+            y_train_series = train_df[TARGET_COLUMN].map({-1: 0.0, 1: 1.0}).astype(float)
 
             x_test_df = test_df.drop(columns=[TARGET_COLUMN])
-            y_test_series = test_df[TARGET_COLUMN].astype(str)
+            y_test_series = test_df[TARGET_COLUMN].map({-1: 0.0, 1: 1.0}).astype(float)
 
             return x_train_df, y_train_series, x_test_df, y_test_series
         except Exception as e:
