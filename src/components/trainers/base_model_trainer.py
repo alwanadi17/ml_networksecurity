@@ -4,11 +4,13 @@ from src.entity.artifact_entity import ModelTrainerArtifact, ClassificationRepor
 from src.entity.config_entity import ModelTrainerConfigEntity
 from src.utils.ml_utils.metrics.classification_metric import classification_result
 from src.utils.utils import save_object, write_yaml_file, read_yaml_file
+from src.constant.training_pipeline import WEIGHT_SCORE, WEIGHT_SCORE_GAP
 
 import os
 import sys
 import pandas as pd
 from typing import Dict, Any
+from math import fabs
 
 class BaseModelTrainer:
     def __init__(
@@ -71,7 +73,7 @@ class BaseModelTrainer:
 
             y_pred_train = self.model.predict(x_train)
             train_classification_report_artifact, report_dict = classification_result(
-                y_true=y_train, 
+                y_true=y_train,
                 y_pred=y_pred_train
             )
             
@@ -92,6 +94,7 @@ class BaseModelTrainer:
 
             logging.info("Update and save training params...")
             self.params = self.model.get_params()
+
             write_yaml_file(
                 self.model_trainer_config.model_params_file_path,
                 self.params
@@ -145,6 +148,14 @@ class BaseModelTrainer:
             test_classification_report_artifact = self.test_model(x_test, y_test)
             logging.info("Model trained successfully.")
 
+            train_f1 = train_classification_report_artifact.f1_score
+            test_f1 = test_classification_report_artifact.f1_score
+            logging.info("Counting score for model...")
+            model_score = (
+                (train_f1*WEIGHT_SCORE) -
+                (fabs(train_f1-test_f1)*WEIGHT_SCORE_GAP)
+            )
+
             model_trainer_artifact = ModelTrainerArtifact(
                 model_name=self.model_trainer_config.model_name,
                 params=self.params,
@@ -153,7 +164,8 @@ class BaseModelTrainer:
                 model_file_path=self.model_trainer_config.model_file_path,
                 model_params_file_path=self.model_trainer_config.model_params_file_path,
                 train_report_file_path=self.model_trainer_config.train_report_file_path,
-                test_report_file_path=self.model_trainer_config.test_report_file_path
+                test_report_file_path=self.model_trainer_config.test_report_file_path,
+                model_score=model_score
             )
 
             return model_trainer_artifact

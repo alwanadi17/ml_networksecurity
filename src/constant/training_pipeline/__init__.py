@@ -65,3 +65,7 @@ MODEL_TRAINER_CLASSIFICATION_REPORT_DIR_NAME: str = "classification_report"
 MODEL_TRAINER_CLASSIFICATION_REPORT_TRAIN_FILE_NAME: str = "classification_report_train.yaml"
 MODEL_TRAINER_CLASSIFICATION_REPORT_TEST_FILE_NAME: str = "classification_report_test.yaml"
 MODEL_TRAINER_MODEL_HYPERPARAMS_DIR_NAME: str = "model_hyperparams"
+
+WEIGHT_SCORE: float = 0.6
+WEIGHT_SCORE_GAP: float = 0.4
+# WEIGHT_TRAINING_TIME: float = 0.1

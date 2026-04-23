@@ -80,8 +80,14 @@ class TrainingPipeline:
 
             model_trainer_artifacts = model_trainer.initiate_model_trainer()
             logging.info(f"Training for model: {model_trainer_artifacts.keys()} completed")
+            logging.info(f"model_trainer_artifacts: {model_trainer_artifacts}")
 
-            return model_trainer_artifacts
+            top_k_models = model_trainer.get_best_k_models(
+                k=2,
+                model_trainer_artifacts=model_trainer_artifacts
+            )
+
+            return top_k_models
         except Exception as e:
             logging.error(f"Error in model_training_pipeline: {e}")
             raise NetException(e)

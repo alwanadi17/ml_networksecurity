@@ -49,7 +49,24 @@ class ModelTrainer:
 
                 model_trainer_artifacts[model_name] = model_trainer_artifact
 
+            model_trainer_artifacts = dict(sorted(
+                model_trainer_artifacts.items(),
+                key=lambda x: x[1].model_score,
+                reverse=True
+            ))
+
             return model_trainer_artifacts
         except Exception as e:
             logging.error(f"Error occurred in initiate_model_trainer at ModelTrainer class: {e}")
+            raise NetException(e, sys) from e
+
+    def get_best_k_models(
+            self,
+            k: int,
+            model_trainer_artifacts: Dict[str, ModelTrainerArtifact]
+    ) -> ModelTrainerArtifact:
+        try:
+            return dict(list(model_trainer_artifacts.items())[:k])
+        except Exception as e:
+            logging.error(f"Error occured in get_best_model at ModelTrainer class: {e}")
             raise NetException(e, sys) from e

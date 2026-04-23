@@ -57,3 +57,4 @@ class ModelTrainerArtifact:
     
     train_classification_report_artifact: ClassificationReportArtifact
     test_classification_report_artifact: ClassificationReportArtifact
+    model_score: float
