@@ -30,7 +30,7 @@ class BaseModelTrainer:
         try:
             self.model_trainer_config.model_name = model.__class__.__name__
             self.model_trainer_config.model_trained_dir = os.path.join(
-                self.model_trainer_config.model_trained_dir,
+                self.model_trainer_config.model_dir,
                 self.model_trainer_config.model_name
             )
             self.model_trainer_config.classification_report_dir = os.path.join(

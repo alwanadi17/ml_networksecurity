@@ -200,7 +200,7 @@ class ModelTrainerConfigEntity:
             tp.MODEL_TRAINER_DIR_NAME
         )
 
-        self.model_trained_dir = os.path.join(
+        self.model_dir = os.path.join(
             self.model_trainer_artifact_dir,
             tp.MODEL_TRAINER_MODEL_TRAINED_DIR_NAME
         )
