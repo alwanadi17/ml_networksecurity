@@ -47,11 +47,10 @@ pip install -r requirements.txt
 ```
 
 ## 📈 Roadmap
-- [ ] Integration with SQL databases for direct data ingestion.
+
+- [ ] Implement MLFlow and Dagshub for report visualization.
 
 - [ ] Automated Hyperparameter Optimization (HPO) support.
-
-- [ ] Multi-format storage exporters (JSON, CSV, Feather).
 
 ## 🤝 Contributing
 Contributions are welcome! If you have ideas for optimization or new features, please feel free to open an issue or submit a pull request.
