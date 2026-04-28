@@ -43,7 +43,7 @@ git clone [https://github.com/alwanadi17/ml_tabular_framework.git](https://githu
 cd ml_tabular_framework
 
 # Install dependencies
-pip install -r requirements.txt
+pip install -r requirements-dev.txt
 ```
 
 ## 📈 Roadmap
